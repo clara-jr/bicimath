@@ -10,7 +10,6 @@
 header {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 
 main {
@@ -67,10 +66,17 @@ button[disabled] {
   border-radius: 4px;
 }
 
+#intro {
+  padding: 10px;
+  border: 1px solid var(--theme-button-disabled-border);
+  border-radius: 4px;
+}
+
 .input-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 .submit {

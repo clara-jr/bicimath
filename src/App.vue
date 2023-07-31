@@ -110,6 +110,12 @@ export default {
   </header>
   <main>
     <div class="form">
+      <p id="intro" class="input-group">
+        Si alguna vez te has preguntado cuál era la mejor opción para moverte por Madrid, estás en
+        el sitio indicado para resolver tus dudas. ¿Te compensa el abono mensual? ¿El abono anual? Y
+        ahora que está BiciMAD en auge, ¿moverte en bici sería más económico? Completa el formulario
+        y lo descubrirás.
+      </p>
       <div class="input-group">
         <label for="transportType">{{ '¿Qué medios de transporte podrías usar?' }}</label>
         <p class="radio">
