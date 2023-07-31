@@ -9,6 +9,8 @@
   --theme-button-disabled-border: #999;
   --theme-button-disabled-bg: #ccc;
   --theme-button-disabled-color: #666;
+  --theme-underlined: #ccc;
+  --theme-underlined-hover: #373e47;
 }
 
 * {

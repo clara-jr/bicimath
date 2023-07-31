@@ -212,4 +212,8 @@ export default {
       </div>
     </div>
   </main>
+  <footer>
+    Made with ❤️ in Madrid |
+    <a href="https://github.com/clara-jr/bicimath">Cotillear el código</a>
+  </footer>
 </template>
