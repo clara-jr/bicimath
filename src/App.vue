@@ -32,7 +32,7 @@ export default {
           ? prices.monthlyEMTUnder26
           : this.age > 65
           ? prices.monthlyEMTOver65
-          : prices.monthlyEMTOver65
+          : prices.monthlyEMT
       const payByMonthEMT = monthlyEMT * this.travelRange
 
       // Abono anual CRTM
