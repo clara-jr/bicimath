@@ -2,6 +2,7 @@ const prices = {
   yearlyBiciMAD: 25,
   halfHourBiciMAD: 0.5,
   oneHourBiciMAD: 1.1,
+  oneHourBiciMADOccasional: 2,
   monthlyEMT: 21.8,
   monthlyEMTUnder26: 8,
   monthlyEMTOver65: 4.3,
