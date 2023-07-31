@@ -7,8 +7,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "lint": "npx eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint:fix": "npx eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore --fix",
+    "lint:quiet": "npx eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore --quiet",
+    "pretty:quiet": "npx prettier --check src/",
+    "pretty:fix": "npx prettier --write src/",
+    "format": "npm run lint:fix && npm run pretty:fix"
   },
   "dependencies": {
     "vue": "^3.3.4"
