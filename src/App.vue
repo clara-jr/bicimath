@@ -108,9 +108,7 @@ export default {
   <main>
     <div class="form">
       <div class="input-group">
-        <label for="transportType">{{
-          'Elige los medios de transporte que no te importaría utilizar:'
-        }}</label>
+        <label for="transportType">{{ '¿Qué medios de transporte podrías usar?' }}</label>
         <p class="radio">
           <input
             type="checkbox"
