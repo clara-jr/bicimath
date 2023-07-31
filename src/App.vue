@@ -112,9 +112,9 @@ export default {
             ? '¿Cuántos viajes harás en ese periodo de tiempo?'
             : '¿Cuántos viajes harás al mes?'
         }}</label>
-        <p>* La ida y la vuelta cuentan como viajes separados.</p>
+        <p class="tooltip">* La ida y la vuelta cuentan como viajes separados.</p>
 
-        <input type="number" id="tripsByMonth" v-model="tripsByMonth" required />
+        <input type="number" id="tripsByMonth" v-model="tripsByMonth" placeholder="Introduce el nº de viajes" required />
       </div>
 
       <div class="input-group">
@@ -122,13 +122,13 @@ export default {
           '¿Cada trayecto podrías hacerlo generalmente en menos de 30 minutos en bici?'
         }}</label>
 
-        <p>
+        <p class="radio">
           <input type="radio" v-model="tripIn30min" value="true" name="yes" checked />{{ ' Sí' }}
         </p>
-        <p><input type="radio" v-model="tripIn30min" value="false" name="no" />{{ ' No' }}</p>
+        <p class="radio"><input type="radio" v-model="tripIn30min" value="false" name="no" />{{ ' No' }}</p>
       </div>
 
-      <div>
+      <div class="submit">
         <button :disabled="isButtonDisabled" @click="!isButtonDisabled && getResult()">
           ¿Qué me sale mejor?
         </button>
@@ -140,35 +140,3 @@ export default {
     </div>
   </main>
 </template>
-
-<style scoped>
-header {
-  display: flex;
-  justify-content: center;
-
-  margin-bottom: 2rem;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-}
-
-.form {
-  width: 50%;
-}
-
-#result {
-  padding: 10px;
-  margin-top: 20px;
-  border: 1px solid #888;
-  border-radius: 4px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-
-  margin-bottom: 1rem;
-}
-</style>
