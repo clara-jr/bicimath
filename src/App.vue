@@ -114,7 +114,13 @@ export default {
         }}</label>
         <p class="tooltip">* La ida y la vuelta cuentan como viajes separados.</p>
 
-        <input type="number" id="tripsByMonth" v-model="tripsByMonth" placeholder="Introduce el nº de viajes" required />
+        <input
+          type="number"
+          id="tripsByMonth"
+          v-model="tripsByMonth"
+          placeholder="Introduce el nº de viajes"
+          required
+        />
       </div>
 
       <div class="input-group">
@@ -125,7 +131,9 @@ export default {
         <p class="radio">
           <input type="radio" v-model="tripIn30min" value="true" name="yes" checked />{{ ' Sí' }}
         </p>
-        <p class="radio"><input type="radio" v-model="tripIn30min" value="false" name="no" />{{ ' No' }}</p>
+        <p class="radio">
+          <input type="radio" v-model="tripIn30min" value="false" name="no" />{{ ' No' }}
+        </p>
       </div>
 
       <div class="submit">
