@@ -82,7 +82,10 @@ export default {
       if (this.useBiciMAD) {
         options.payByYearBiciMAD = payByYearBiciMAD
         options.payByTripBiciMAD = payByTripBiciMAD
-        results.payByYearBiciMAD = `La opción más económica en tu caso será utilizar un abono anual de BiciMAD por un precio total de ${payByYearBiciMAD} € (${yearlyBiciMAD} € iniciales y ${singleTripBiciMAD} € cada trayecto).`
+        results.payByYearBiciMAD =
+          this.tripIn30min === 'true'
+            ? `La opción más económica en tu caso será utilizar un abono anual de BiciMAD por un precio total de ${payByYearBiciMAD} € (${yearlyBiciMAD} € iniciales y ${singleTripBiciMAD} € cada trayecto de menos de 30 min).`
+            : `La opción más económica en tu caso será utilizar un abono anual de BiciMAD por un precio total de ${payByYearBiciMAD} € (${yearlyBiciMAD} € iniciales y ${singleTripBiciMAD} € cada trayecto de menos de 1 h).`
         results.payByTripBiciMAD = `La opción más económica en tu caso será utilizar BiciMAD de forma ocasional por un precio total de ${payByTripBiciMAD} € (${singleTripBiciMADOcasional} € cada trayecto de menos de 1 h).`
 
         if (prices.isBiciMADFree) {
