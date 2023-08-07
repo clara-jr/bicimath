@@ -150,7 +150,14 @@ export default {
       </div>
       <div class="input-group">
         <label for="age">¿Cuál es tu edad?</label>
-        <input type="number" id="age" v-model="age" placeholder="Introduce tu edad" required />
+        <input
+          type="number"
+          id="age"
+          min="0"
+          v-model="age"
+          placeholder="Introduce tu edad"
+          required
+        />
       </div>
 
       <div class="input-group">
@@ -181,6 +188,7 @@ export default {
 
         <input
           type="number"
+          min="0"
           id="tripsByMonth"
           v-model="tripsByMonth"
           placeholder="Introduce el nº de viajes"
