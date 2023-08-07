@@ -202,7 +202,7 @@ export default {
         }}</label>
 
         <p class="radio">
-          <input type="radio" v-model="tripIn30min" value="true" name="yes" checked />{{ ' Sí' }}
+          <input type="radio" v-model="tripIn30min" value="true" name="yes" />{{ ' Sí' }}
         </p>
         <p class="radio">
           <input type="radio" v-model="tripIn30min" value="false" name="no" />{{ ' No' }}
