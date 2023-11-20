@@ -1,5 +1,6 @@
 :root {
   color-scheme: light;
+  --theme-blue: #256dc1;
   --theme-bg: #fff;
   --theme-text: #373e47;
   --theme-button-bg: #0c80ff;

@@ -33,30 +33,29 @@ export default {
           : this.age > 65
           ? prices.monthlyEMTOver65
           : prices.monthlyEMT
-      const payByMonthEMT = monthlyEMT * this.travelRange
+      const payByMonthEMT = Math.round(monthlyEMT * this.travelRange * 10) / 10
 
       // Abono anual CRTM
       const yearlyEMT = monthlyEMT * 10
-      const payByYearEMT = Math.round(yearlyEMT)
+      const payByYearEMT = Math.round(yearlyEMT * 10) / 10
 
       // Billete 10 viajes CRTM
       const tenTripsEMT = prices.tenTripsEMT
       const numberOfTenTripsTicketsEMT = Math.ceil((this.tripsByMonth * this.travelRange) / 10)
-      const payByTripEMT = Math.round(tenTripsEMT * numberOfTenTripsTicketsEMT)
+      const payByTripEMT = Math.round(tenTripsEMT * numberOfTenTripsTicketsEMT * 10) / 10
 
       // Abono anual BiciMAD
       const yearlyBiciMAD = prices.yearlyBiciMAD
       const singleTripBiciMAD =
         this.tripIn30min === 'true' ? prices.halfHourBiciMAD : prices.oneHourBiciMAD
-      const payByYearBiciMAD = Math.round(
-        yearlyBiciMAD + singleTripBiciMAD * this.tripsByMonth * this.travelRange
-      )
+      const payByYearBiciMAD =
+        Math.round(yearlyBiciMAD + singleTripBiciMAD * this.tripsByMonth * this.travelRange * 10) /
+        10
 
       // BiciMAD ocasional
       const singleTripBiciMADOcasional = prices.oneHourBiciMADOccasional
-      const payByTripBiciMAD = Math.round(
-        singleTripBiciMADOcasional * this.tripsByMonth * this.travelRange
-      )
+      const payByTripBiciMAD =
+        Math.round(singleTripBiciMADOcasional * this.tripsByMonth * this.travelRange * 10) / 10
 
       const options = {}
       const results = {}
