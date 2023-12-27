@@ -11,7 +11,10 @@ export default {
       result: null,
       useBiciMAD: true,
       useBus: true,
-      useMetro: true
+      useMetro: true,
+      largeFamily: false,
+      largeFamilyType: null,
+      disability: false
     }
   },
   computed: {
@@ -20,32 +23,49 @@ export default {
         !this.age ||
         !this.travelRange ||
         !this.tripsByMonth ||
-        (!this.useBus && !this.useMetro && !this.useBiciMAD)
+        (!this.useBus && !this.useMetro && !this.useBiciMAD) ||
+        (this.largeFamily && !this.largeFamilyType)
       )
     }
   },
   methods: {
     getResult() {
+      const applyDiscounts = (price) => {
+        const trunc = (number, digits = 0) => {
+          let string = number.toString()
+          const firstDecimalPosition = string.indexOf('.') + 1
+          string = string.substr(0, firstDecimalPosition + digits)
+          return Number(string)
+        }
+        if (this.largeFamily)
+          price = trunc((1 - prices.largeFamily[this.largeFamilyType]) * price, 1)
+        if (this.disability) price = trunc((1 - prices.disability) * price, 1)
+        return price
+      }
+
       // Abono mensual CRTM
-      const monthlyEMT =
+      let monthlyEMT =
         this.age < 26
           ? prices.monthlyEMTUnder26
           : this.age > 65
           ? prices.monthlyEMTOver65
           : prices.monthlyEMT
+      monthlyEMT = applyDiscounts(monthlyEMT)
       const payByMonthEMT = Math.round(monthlyEMT * this.travelRange * 10) / 10
 
       // Abono anual CRTM
-      const yearlyEMT =
+      let yearlyEMT =
         this.age < 26
           ? prices.yearlyEMTUnder26
           : this.age > 65
           ? prices.yearlyEMTOver65
           : prices.yearlyEMT
+      yearlyEMT = applyDiscounts(yearlyEMT)
       const payByYearEMT = Math.round(yearlyEMT * 10) / 10
 
       // Billete 10 viajes CRTM
-      const tenTripsEMT = prices.tenTripsEMT
+      let tenTripsEMT = prices.tenTripsEMT
+      tenTripsEMT = applyDiscounts(tenTripsEMT)
       const numberOfTenTripsTicketsEMT = Math.ceil((this.tripsByMonth * this.travelRange) / 10)
       const payByTripEMT = Math.round(tenTripsEMT * numberOfTenTripsTicketsEMT * 10) / 10
 
@@ -124,6 +144,7 @@ export default {
         el sitio indicado para resolver tus dudas. ¿Te compensa el abono mensual? ¿El abono anual?
         ¿Utilizar BiciMAD sería más económico? Completa el formulario y lo descubrirás.
       </p>
+
       <div class="input-group">
         <label for="transportType">{{ '¿Qué medios de transporte podrías usar?' }}</label>
         <p class="radio">
@@ -157,6 +178,7 @@ export default {
           />{{ ' Bus EMT' }}
         </p>
       </div>
+
       <div class="input-group">
         <label for="age">¿Cuál es tu edad?</label>
         <input
@@ -167,6 +189,47 @@ export default {
           placeholder="Introduce tu edad"
           required
         />
+      </div>
+
+      <div class="input-group" v-if="useMetro || useBus">
+        <label for="largeFamily">{{ '¿Formas parte de una familia numerosa?' }}</label>
+
+        <p class="radio">
+          <input type="radio" v-model="largeFamily" :value="true" name="largeFamily" />{{ ' Sí' }}
+        </p>
+        <p class="radio">
+          <input type="radio" v-model="largeFamily" :value="false" name="notLargeFamily" />{{
+            ' No'
+          }}
+        </p>
+      </div>
+
+      <div class="input-group" v-if="(useMetro || useBus) && largeFamily">
+        <label for="largeFamily">{{ '¿Es familia numerosa general o especial?' }}</label>
+
+        <p class="radio">
+          <input type="radio" v-model="largeFamilyType" value="general" name="general" />{{
+            ' General'
+          }}
+        </p>
+        <p class="radio">
+          <input type="radio" v-model="largeFamilyType" value="special" name="special" />{{
+            ' Especial'
+          }}
+        </p>
+      </div>
+
+      <div class="input-group" v-if="useMetro || useBus">
+        <label for="largeFamily">{{ '¿Tienes una discapacidad ≥65%?' }}</label>
+
+        <p class="radio">
+          <input type="radio" v-model="disability" value="true" name="withDisability" />{{ ' Sí' }}
+        </p>
+        <p class="radio">
+          <input type="radio" v-model="disability" value="false" name="withoutDisability" />{{
+            ' No'
+          }}
+        </p>
       </div>
 
       <div class="input-group">

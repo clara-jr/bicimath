@@ -15,7 +15,10 @@ const prices = {
   tenTripsEMT: 6.1,
   // Conditions
   doesYearlyEMTExist: new Date() >= new Date('01/01/2024'),
-  isBiciMADFree: new Date() < new Date('01/02/2024')
+  isBiciMADFree: new Date() < new Date('01/02/2024'),
+  // Discounts CRTM (%)
+  disability: 0.2,
+  largeFamily: { general: 0.2, special: 0.5 }
 }
 
 export default prices
