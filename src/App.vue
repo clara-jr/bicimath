@@ -36,7 +36,12 @@ export default {
       const payByMonthEMT = Math.round(monthlyEMT * this.travelRange * 10) / 10
 
       // Abono anual CRTM
-      const yearlyEMT = monthlyEMT * 10
+      const yearlyEMT =
+        this.age < 26
+          ? prices.yearlyEMTUnder26
+          : this.age > 65
+          ? prices.yearlyEMTOver65
+          : prices.yearlyEMT
       const payByYearEMT = Math.round(yearlyEMT * 10) / 10
 
       // Billete 10 viajes CRTM
@@ -44,55 +49,60 @@ export default {
       const numberOfTenTripsTicketsEMT = Math.ceil((this.tripsByMonth * this.travelRange) / 10)
       const payByTripEMT = Math.round(tenTripsEMT * numberOfTenTripsTicketsEMT * 10) / 10
 
-      // Abono anual BiciMAD
-      const yearlyBiciMAD = prices.yearlyBiciMAD
-      const singleTripBiciMAD =
-        this.tripIn30min === 'true' ? prices.halfHourBiciMAD : prices.oneHourBiciMAD
-      const payByYearBiciMAD =
-        Math.round(yearlyBiciMAD + singleTripBiciMAD * this.tripsByMonth * this.travelRange * 10) /
-        10
+      // Abono mensual BiciMAD
+      const monthlyBiciMAD = prices.monthlyBiciMAD
+      const payByMonthBiciMAD = Math.round(monthlyBiciMAD * this.travelRange * 10) / 10
 
       // BiciMAD ocasional
-      const singleTripBiciMADOcasional = prices.oneHourBiciMADOccasional
+      const singleTripBiciMAD =
+        this.tripIn30min === 'true' ? prices.halfHourBiciMAD : prices.oneHourBiciMAD
       const payByTripBiciMAD =
-        Math.round(singleTripBiciMADOcasional * this.tripsByMonth * this.travelRange * 10) / 10
+        Math.round(singleTripBiciMAD * this.tripsByMonth * this.travelRange * 10) / 10
 
       const options = {}
       const results = {}
 
       if (this.useBus || this.useMetro) {
+        if (prices.doesYearlyEMTExist) {
+          options.payByYearEMT = payByYearEMT
+          results.payByYearEMT =
+            payByYearEMT > 0
+              ? `La opción más económica en tu caso será pagar por el abono anual del CRTM y tendrá un coste de ${payByYearEMT}.`
+              : 'La opción más económica en tu caso es usar el abono anual del CRTM ya que es gratuito para personas mayores de 65 años.'
+        }
+
         options.payByMonthEMT = payByMonthEMT
         options.payByTripEMT = payByTripEMT
         results.payByMonthEMT =
-          +this.travelRange > 1
-            ? `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste total de ${payByMonthEMT} € (${monthlyEMT} € al mes).`
-            : `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste de ${payByMonthEMT} €.`
+          payByMonthEMT > 0
+            ? +this.travelRange > 1
+              ? `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste total de ${payByMonthEMT} € (${monthlyEMT} € al mes).`
+              : `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste de ${payByMonthEMT} €.`
+            : `La opción más económica en tu caso es usar el abono mensual del CRTM ya que es gratuito para personas mayores de 65 años.`
         results.payByTripEMT =
           numberOfTenTripsTicketsEMT > 1
             ? `La opción más económica en tu caso será utilizar abonos de 10 viajes del CRTM y tendrá un coste total de ${payByTripEMT} € (${numberOfTenTripsTicketsEMT} billetes de 10 viajes a un precio de ${tenTripsEMT} € cada uno).`
             : `La opción más económica en tu caso será utilizar un abono de 10 viajes del CRTM y tendrá un coste de ${payByTripEMT} €`
-
-        if (prices.doesYearlyEMTExist) {
-          options.payByYearEMT = payByYearEMT
-          results.payByYearEMT = `La opción más económica en tu caso será pagar por el abono anual del CRTM y tendrá un coste de ${payByYearEMT}.`
-        }
       }
 
       if (this.useBiciMAD) {
-        options.payByYearBiciMAD = payByYearBiciMAD
+        options.payByMonthBiciMAD = payByMonthBiciMAD
         options.payByTripBiciMAD = payByTripBiciMAD
-        results.payByYearBiciMAD =
+        results.payByMonthBiciMAD =
           this.tripIn30min === 'true'
-            ? `La opción más económica en tu caso será utilizar un abono anual de BiciMAD por un precio total de ${payByYearBiciMAD} € (${yearlyBiciMAD} € iniciales y ${singleTripBiciMAD} € cada trayecto de menos de 30 min).`
-            : `La opción más económica en tu caso será utilizar un abono anual de BiciMAD por un precio total de ${payByYearBiciMAD} € (${yearlyBiciMAD} € iniciales y ${singleTripBiciMAD} € cada trayecto de menos de 1 h).`
-        results.payByTripBiciMAD = `La opción más económica en tu caso será utilizar BiciMAD de forma ocasional por un precio total de ${payByTripBiciMAD} € (${singleTripBiciMADOcasional} € cada trayecto de menos de 1 h).`
+            ? `La opción más económica en tu caso será utilizar el abono mensual de BiciMAD por un precio total de ${payByMonthBiciMAD} € (${monthlyBiciMAD} € al mes).`
+            : `La opción más económica en tu caso será utilizar el abono mensual de BiciMAD por un precio total de ${payByMonthBiciMAD} € (${monthlyBiciMAD} € al mes, los viajes de menos de 30 minutos serán gratuitos y siempre puedes ir enlazando bicis de una estación de BiciMAD a otra).`
+        results.payByTripBiciMAD =
+          this.tripIn30min === 'true'
+            ? `La opción más económica en tu caso será utilizar BiciMAD de forma ocasional por un precio total de ${payByTripBiciMAD} € (${singleTripBiciMAD} € cada trayecto de menos de 30 minutos).`
+            : `La opción más económica en tu caso será utilizar BiciMAD de forma ocasional por un precio total de ${payByTripBiciMAD} € (${singleTripBiciMAD} € cada trayecto de entre 30 minutos y 1 h).`
 
         if (prices.isBiciMADFree) {
           options.isBiciMADFree = 0
           results.isBiciMADFree =
             this.tripIn30min === 'true'
-              ? `La opción más económica este año es utilizar BiciMAD ya que, hasta el 31 de diciembre de 2023, los viajes de menos de 30 minutos son gratuitos.`
-              : `La opción más económica este año es utilizar BiciMAD ya que, hasta el 31 de diciembre de 2023, los viajes de menos de 30 minutos son gratuitos (y siempre puedes ir enlazando bicis de una estación de BiciMAD a otra).`
+              ? `La opción más económica este año es utilizar BiciMAD ya que, hasta el 31 de enero de 2024, los viajes de menos de 30 minutos son gratuitos.`
+              : `La opción más económica este año es utilizar BiciMAD ya que, hasta el 31 de enero de 2024, los viajes de menos de 30 minutos son gratuitos (y siempre puedes ir enlazando bicis de una estación de BiciMAD a otra).`
         }
       }
 
