@@ -88,7 +88,7 @@ export default {
           results.payByYearEMT =
             payByYearEMT > 0
               ? `La opción más económica en tu caso será pagar por el abono anual del CRTM y tendrá un coste de ${payByYearEMT}.`
-              : 'La opción más económica en tu caso es usar el abono anual del CRTM ya que es gratuito para personas mayores de 65 años.'
+              : 'La opción más económica en tu caso es usar el abono +65 del CRTM (con validez para 365 días) ya que es gratuito para personas mayores de 65 años.'
         }
 
         options.payByMonthEMT = payByMonthEMT
@@ -98,7 +98,7 @@ export default {
             ? +this.travelRange > 1
               ? `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste total de ${payByMonthEMT} € (${monthlyEMT} € al mes).`
               : `La opción más económica en tu caso será pagar por el abono mensual del CRTM y tendrá un coste de ${payByMonthEMT} €.`
-            : `La opción más económica en tu caso es usar el abono mensual del CRTM ya que es gratuito para personas mayores de 65 años.`
+            : `La opción más económica en tu caso es usar el abono abono +65 del CRTM (con validez para 365 días) ya que es gratuito para personas mayores de 65 años.`
         results.payByTripEMT =
           numberOfTenTripsTicketsEMT > 1
             ? `La opción más económica en tu caso será utilizar abonos de 10 viajes del CRTM y tendrá un coste total de ${payByTripEMT} € (${numberOfTenTripsTicketsEMT} billetes de 10 viajes a un precio de ${tenTripsEMT} € cada uno).`
