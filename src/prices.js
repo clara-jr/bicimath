@@ -14,7 +14,7 @@ const prices = {
   // Trips CRTM
   tenTripsEMT: 6.1, // 12.2 (50%)
   // Conditions
-  doesYearlyEMTExist: new Date() >= new Date('01/01/2024'),
+  doesYearlyEMTExist: false,
   isBiciMADFree: new Date() < new Date('01/02/2024'),
   // Discounts CRTM (%)
   disability: 0.2,
